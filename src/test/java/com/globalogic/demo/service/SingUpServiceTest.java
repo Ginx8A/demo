@@ -11,7 +11,6 @@ import org.hibernate.JDBCException;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
 import javax.persistence.EntityExistsException;
 import java.time.LocalDateTime;
@@ -25,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = SignUpService.class)
+@SpringBootTest
 public class SingUpServiceTest {
 
         public static final String MY_MAIL = "mail@mail.com";

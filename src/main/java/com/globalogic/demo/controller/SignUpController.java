@@ -1,12 +1,9 @@
 package com.globalogic.demo.controller;
 
-import com.globalogic.demo.config.exception.BusinessException;
 import com.globalogic.demo.config.exception.ValidatorException;
 import com.globalogic.demo.controller.validator.Validator;
-import com.globalogic.demo.dto.LoginDto;
 import com.globalogic.demo.dto.SingUpDto;
 import com.globalogic.demo.dto.UserDto;
-import com.globalogic.demo.service.LoginService;
 import com.globalogic.demo.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
 @RequiredArgsConstructor

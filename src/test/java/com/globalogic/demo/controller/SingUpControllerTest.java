@@ -117,13 +117,13 @@ class SingUpControllerTest {
 
     @Test
     void saveEmailValidationNull() throws Exception {
-        UserDto request = UserDto.builder().password(passwordOK).build();
+        UserDto request = UserDto.builder().email(email).build();
         checkValidationErrors(request, Validator.MSG_REQUIRED_PASSWORD);
     }
 
     @Test
     void saveEmailValidationPattern() throws Exception {
-        UserDto request = UserDto.builder().email("").password(passwordOK).build();
+        UserDto request = UserDto.builder().email("a").password(passwordOK).build();
         checkValidationErrors(request, Validator.MSG_REGEX_MAIL);
     }
 

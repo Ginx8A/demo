@@ -11,7 +11,7 @@ public class JwtUtils {
 
     public static String JWT_SECRET = "G1.8A";
 
-    public static long JWT_EXPIRATION_TIME = 3000;
+    public static long JWT_EXPIRATION_TIME = 300000;
 
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";

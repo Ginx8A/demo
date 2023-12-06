@@ -25,11 +25,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = LoginService.class)
+@SpringBootTest
 public class LoginServiceTest {
 
     public static final String USUARIO_NO_EXISTE = "No existe un usuario con el email ingresado";
-    public static final String USUARIO_NO_HABILITADO = "El usuario no se encuentra habilitado";
+    public static final String USUARIO_NO_HABILITADO = "Usuario NO habilitado";
 
     @InjectMocks
     LoginServiceImpl service;
