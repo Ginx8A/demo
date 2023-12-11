@@ -15,7 +15,7 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<Object> getLogin(@RequestHeader("Authorization") String authorization) throws BusinessException {
         LoginDto response = loginService.getUser(authorization);
         return ResponseEntity.status(HttpStatus.OK).body(response);

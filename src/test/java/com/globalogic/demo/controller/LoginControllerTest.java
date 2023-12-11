@@ -68,7 +68,7 @@ public class LoginControllerTest {
         LoginDto dto = LoginDto.builder().token(token).email(email).build();
         when(service.getUser(any())).thenReturn(dto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        mockMvc.perform(MockMvcRequestBuilders.get("/login")
                         .header(HttpHeaders.AUTHORIZATION, BEARER + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -81,7 +81,7 @@ public class LoginControllerTest {
     void loginOkBusinessExceptionUserExist() throws Exception {
         when(service.getUser(any())).thenThrow(new BusinessException(USUARIO_NO_EXISTE));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        mockMvc.perform(MockMvcRequestBuilders.get("/login")
                         .header(HttpHeaders.AUTHORIZATION, BEARER + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -93,7 +93,7 @@ public class LoginControllerTest {
     void loginOkBusinessExceptionUserInactive() throws Exception {
         when(service.getUser(any())).thenThrow(new BusinessException(USUARIO_NO_HABILITADO));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        mockMvc.perform(MockMvcRequestBuilders.get("/login")
                         .header(HttpHeaders.AUTHORIZATION, BEARER + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -103,7 +103,7 @@ public class LoginControllerTest {
 
     @Test
     void loginUnauthorized() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        mockMvc.perform(MockMvcRequestBuilders.get("/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
@@ -112,7 +112,7 @@ public class LoginControllerTest {
     @Test
     void loginInvalidJWTFormat() throws Exception {
         try {
-            mockMvc.perform(MockMvcRequestBuilders.post("/login")
+            mockMvc.perform(MockMvcRequestBuilders.get("/login")
                             .header(HttpHeaders.AUTHORIZATION, MOCK_TOKEN_INVALID)
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
@@ -127,7 +127,7 @@ public class LoginControllerTest {
     @Test
     void loginExpiredJWT() throws Exception {
         try {
-            mockMvc.perform(MockMvcRequestBuilders.post("/login")
+            mockMvc.perform(MockMvcRequestBuilders.get("/login")
                             .header(HttpHeaders.AUTHORIZATION, MOCK_TOKEN_EXPIRED)
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
@@ -142,7 +142,7 @@ public class LoginControllerTest {
     @Test
     void loginSignatureVerificationException() throws Exception {
         try {
-            mockMvc.perform(MockMvcRequestBuilders.post("/login")
+            mockMvc.perform(MockMvcRequestBuilders.get("/login")
                             .header(HttpHeaders.AUTHORIZATION, MOCK_TOKEN)
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON))
@@ -156,7 +156,7 @@ public class LoginControllerTest {
 
     @Test
     void loginMethodNotAllowedException() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/login")
+        mockMvc.perform(MockMvcRequestBuilders.post("/login")
                         .header(HttpHeaders.AUTHORIZATION, BEARER + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

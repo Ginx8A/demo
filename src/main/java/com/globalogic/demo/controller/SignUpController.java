@@ -1,7 +1,6 @@
 package com.globalogic.demo.controller;
 
 import com.globalogic.demo.config.exception.ValidatorException;
-import com.globalogic.demo.controller.validator.Validator;
 import com.globalogic.demo.dto.SingUpDto;
 import com.globalogic.demo.dto.UserDto;
 import com.globalogic.demo.service.SignUpService;
@@ -22,7 +21,7 @@ public class SignUpController {
     @PostMapping("/sign-up")
     public ResponseEntity<SingUpDto> postSignUp(@RequestBody UserDto dto) throws ValidatorException {
 
-        Validator.validatorSignUp(dto);
+        service.validatorSignUp(dto);
         SingUpDto response = service.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

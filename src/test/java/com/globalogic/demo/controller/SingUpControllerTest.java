@@ -1,13 +1,13 @@
 package com.globalogic.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.globalogic.demo.controller.validator.Validator;
-import com.globalogic.demo.dto.LoginDto;
+import com.globalogic.demo.config.exception.ValidatorException;
 import com.globalogic.demo.dto.SingUpDto;
 import com.globalogic.demo.dto.UserDto;
 import com.globalogic.demo.entities.Phone;
 import com.globalogic.demo.entities.User;
 import com.globalogic.demo.service.SignUpService;
+import com.globalogic.demo.util.Constant;
 import org.hibernate.JDBCException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -106,7 +106,7 @@ class SingUpControllerTest {
     void checkValidationErrors(UserDto request, String errorDetail) throws Exception {
         String jsonContent = "{\"error\":[{\"detail\":\"".concat(errorDetail).concat("\"}]}");
         when(service.save(any(UserDto.class))).thenReturn(response);
-
+        when(service.validatorSignUp(any(UserDto.class))).thenThrow(new ValidatorException());
         mockMvc.perform(MockMvcRequestBuilders.post("/sign-up")
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -118,37 +118,37 @@ class SingUpControllerTest {
     @Test
     void saveEmailValidationNull() throws Exception {
         UserDto request = UserDto.builder().email(email).build();
-        checkValidationErrors(request, Validator.MSG_REQUIRED_PASSWORD);
+        checkValidationErrors(request, Constant.MSG_REQUIRED_PASSWORD);
     }
 
     @Test
     void saveEmailValidationPattern() throws Exception {
         UserDto request = UserDto.builder().email("a").password(passwordOK).build();
-        checkValidationErrors(request, Validator.MSG_REGEX_MAIL);
+        checkValidationErrors(request, Constant.MSG_REGEX_MAIL);
     }
 
     @Test
     void savePasswordValidationNull() throws Exception {
         UserDto request = UserDto.builder().email(email).build();
-        checkValidationErrors(request, Validator.MSG_REQUIRED_PASSWORD);
+        checkValidationErrors(request, Constant.MSG_REQUIRED_PASSWORD);
     }
 
     @Test
     void savePasswordValidationLength() throws Exception {
         UserDto request = UserDto.builder().email(email).password("zzA12").build();
-        checkValidationErrors(request, Validator.MSG_REQUIRED_LENGTH);
+        checkValidationErrors(request, Constant.MSG_REQUIRED_LENGTH);
     }
 
     @Test
     void savePasswordValidationUppercase() throws Exception {
         UserDto request = UserDto.builder().email(email).password("ABC12zzzz").build();
-        checkValidationErrors(request, Validator.MSG_REGEX_PASSWORD);
+        checkValidationErrors(request, Constant.MSG_REGEX_PASSWORD);
     }
 
     @Test
     void savePasswordValidationNumbers() throws Exception {
         UserDto request = UserDto.builder().email(email).password("zA123zzzz").build();
-        checkValidationErrors(request, Validator.MSG_REGEX_PASSWORD);
+        checkValidationErrors(request, Constant.MSG_REGEX_PASSWORD);
     }
 
     @Test
